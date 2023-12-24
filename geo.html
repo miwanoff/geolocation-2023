@@ -36,7 +36,7 @@
         map.addLayer(markers);
         markers.addMarker(new OpenLayers.Marker(position));
         map.setCenter(position, zoom);
-        
+
         function geoFindMe() {
             let status = document.querySelector("#status");
             let mapLink = document.querySelector("#map");
@@ -50,6 +50,15 @@
                     latitude + "/" + longitude;
                 mapLink.innerHTML =
                     "Latitude:" + latitude + " °, Longitude: " + longitude + "°";
+
+                // перерахунок позиціонування
+                position = new OpenLayers.LonLat(longitude, latitude).transform(
+                    fromProjection, toProjection
+                );
+
+                // додаємо маркери
+                markers.addMarker(new OpenLayers.Marker(position));
+                map.setCenter(position, zoom);
             }
 
             function error() {
